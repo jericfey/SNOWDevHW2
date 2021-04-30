@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_script_client">
     <sys_script_client action="INSERT_OR_UPDATE">
-        <active>false</active>
+        <active>true</active>
         <applies_extended>false</applies_extended>
         <condition/>
         <description>On Change of the Change Request field, populate the current forms Short Description field with the value from the selected Change Request record.</description>
@@ -8,53 +8,36 @@
         <global>true</global>
         <isolate_script>true</isolate_script>
         <messages/>
-        <name>Update sh desc from change request</name>
+        <name>Update sh desc from change request-new</name>
         <order/>
         <script><![CDATA[function onChange(control, oldValue, newValue, isLoading, isTemplate) {
    if (isLoading || newValue === '') {
       return;
    }
 
-     var newrec = gel('sys_row');
-    //Check if new record 
-    if (newrec.value == -1) {
-		//Create lookup table
-        var lookup = new GlideRecord('u_short_desc_lookup');
-		//Populate the key field for change request
-        lookup.addQuery('u_change_request', g_form.getValue('change_request'));
-        lookup.query();
-        var temp; //temp var - reusable
-        if(lookup.next()){
-            temp = lookup.u_change_request;
-            if(null != temp) {
-                //Set the form value from lookup if there is a lookup value
-                g_form.setValue('short_description', temp);
-            } else {
-                g_form.setValue('short_description',"");
-                }
-          } else {
-              //If a lookup record does not exist based on lookup.addQuery
-              //Then set to UNDEFINED or NULL depending on type
-              g_form.setValue('short_description',"");
-              }
-     }
+	var cr = g_form.getReference('change_request', setShortDesc);
    
+}
+function setShortDesc(cr) {
+	if(cr.short_description != '') {
+		g_gorm.setValue('short_description', cr.short_description);
+	}
 }]]></script>
         <sys_class_name>sys_script_client</sys_class_name>
         <sys_created_by>admin</sys_created_by>
-        <sys_created_on>2021-04-30 06:43:28</sys_created_on>
+        <sys_created_on>2021-04-30 06:52:38</sys_created_on>
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
-        <sys_id>eea4a68a07f32010a367fdac7c1ed033</sys_id>
+        <sys_id>e15b2e0e07f32010a367fdac7c1ed0ae</sys_id>
         <sys_mod_count>1</sys_mod_count>
-        <sys_name>Update sh desc from change request</sys_name>
+        <sys_name>Update sh desc from change request-new</sys_name>
         <sys_overrides/>
         <sys_package display_value="Maintenance Tasks" source="x_626838_maint">dd56a90207332010a367fdac7c1ed076</sys_package>
         <sys_policy/>
         <sys_scope display_value="Maintenance Tasks">dd56a90207332010a367fdac7c1ed076</sys_scope>
-        <sys_update_name>sys_script_client_eea4a68a07f32010a367fdac7c1ed033</sys_update_name>
+        <sys_update_name>sys_script_client_e15b2e0e07f32010a367fdac7c1ed0ae</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2021-04-30 06:52:21</sys_updated_on>
+        <sys_updated_on>2021-04-30 06:57:46</sys_updated_on>
         <table>x_626838_maint_task</table>
         <type>onChange</type>
         <ui_type>10</ui_type>
