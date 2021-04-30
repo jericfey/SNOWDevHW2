@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_626838_maint.GlideAjaxCIData</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description>Create an object from selected configuration item, with Name, Operational Status, Owned by, Update and Updated by.</description>
+        <name>GlideAjaxCIData</name>
+        <script><![CDATA[var GlideAjaxCIData = Class.create();
+GlideAjaxCIData.prototype = {
+    ciDetails: function() {
+	var cmdbid = this.getParameter('sysparm_cmdbid');
+		var grC = new GlideRecord('cmdb_ci');
+			grC = addQuery('sys_id', cmdbid);
+			grC.query();
+		
+		if (grC.next()){
+			var json = new JSON();
+			var object = {
+				"name" : gr.getValue("name"),
+				"operational_status" : gr.getValue("operational_status"), 
+				"owned_by" : gr.getValue("owned_by"), 
+				"sys_updated" : gr.getValue("sys_updated"),
+				"sys_updated_by" : gr.getValue("sys_updated_by")
+			};
+			var data = json.encode(object);
+			return data;
+		}
+		
+	},
+    type: 'GlideAjaxCIData'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2021-04-30 07:10:32</sys_created_on>
+        <sys_id>81be6ece07f32010a367fdac7c1ed022</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>GlideAjaxCIData</sys_name>
+        <sys_package display_value="Maintenance Tasks" source="x_626838_maint">dd56a90207332010a367fdac7c1ed076</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="Maintenance Tasks">dd56a90207332010a367fdac7c1ed076</sys_scope>
+        <sys_update_name>sys_script_include_81be6ece07f32010a367fdac7c1ed022</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2021-04-30 07:12:18</sys_updated_on>
+    </sys_script_include>
+</record_update>

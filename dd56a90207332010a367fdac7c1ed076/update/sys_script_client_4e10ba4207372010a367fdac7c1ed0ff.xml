@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_script_client">
+    <sys_script_client action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <applies_extended>false</applies_extended>
+        <condition/>
+        <description>On Maintenance task form, If Impact changes to 1, then populate Description with CI field information from script include GlideAjaxCIData</description>
+        <field>impact</field>
+        <global>true</global>
+        <isolate_script>true</isolate_script>
+        <messages/>
+        <name>Glide.Ajax.CI.Data</name>
+        <order/>
+        <script><![CDATA[function onChange(control, oldValue, newValue, isLoading, isTemplate) {
+   if (isLoading || newValue === '') {
+      return;
+   }
+
+    //If Impact changes to 1, then populate Description with CI field information
+	var ciData = g_form.getValue('ci');
+	if(newValue == '1'){
+		
+		var ga = new GlideAjax('glideajaxcidata');
+		ga.addParam('sysparm_name', 'cmdbDetails');
+		ga.addParam('sysparm_id', ciData);
+		ga.getXML(updateDesc);
+	}	
+	
+	function updateDesc(response){
+		var answer = response.responseXML.documentElement.getAttribute("answer");
+		var returneddata = answer.evalJSON(true);
+		g_form.setValue('description', returneddata.name);
+		//I'm trying to get at least the name field value to populate on the impact change before adding the rest of the fields, but not sure why this isn't working.
+		
+	}
+   
+}]]></script>
+        <sys_class_name>sys_script_client</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2021-04-30 07:15:06</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>4e10ba4207372010a367fdac7c1ed0ff</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Glide.Ajax.CI.Data</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Maintenance Tasks" source="x_626838_maint">dd56a90207332010a367fdac7c1ed076</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Maintenance Tasks">dd56a90207332010a367fdac7c1ed076</sys_scope>
+        <sys_update_name>sys_script_client_4e10ba4207372010a367fdac7c1ed0ff</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2021-04-30 07:15:06</sys_updated_on>
+        <table>x_626838_maint_task</table>
+        <type>onChange</type>
+        <ui_type>0</ui_type>
+        <view/>
+    </sys_script_client>
+</record_update>
