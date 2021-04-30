@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element extends="task" label="Task" max_length="40" name="x_626838_maint_task" type="collection">
+        <element attributes="encode_utf8=false" label="Change Request" max_length="32" name="change_request" reference="change_request" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Configuration Item" max_length="32" name="u_configuration_item" reference="cmdb_ci" reference_qual="sys_class_name=cmdb_ci_appl^EQ" reference_qual_condition="sys_class_name=cmdb_ci_appl^EQ" type="reference"/>
+    </element>
+</database>
